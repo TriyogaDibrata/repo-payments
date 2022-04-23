@@ -98,7 +98,7 @@ import { AppConfigComponent } from './_layouts/app.config.component';
 import { AppMenuComponent } from './_layouts/app.menu.component';
 import { AppMenuitemComponent } from './_layouts/app.menuitem.component';
 
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+// import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FormLayoutComponent } from './components/formlayout/formlayout.component';
 import { FloatLabelComponent } from './components/floatlabel/floatlabel.component';
 import { InvalidStateComponent } from './components/invalidstate/invalidstate.component';
@@ -136,11 +136,18 @@ import { PhotoService } from './service/photoservice';
 import { ProductService } from './service/productservice';
 import { MenuService } from './service/app.menu.service';
 import { ConfigService } from './service/app.config.service';
-import { LoginComponent } from './_auth/login/login.component';
 // import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from './components/error/error.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AccessComponent } from './components/access/access.component';
+
+//new
+import { LoginComponent } from './_auth/login/login.component';
+import { DashboardComponent } from './_pages/dashboard/dashboard.component';
+import { CustomerComponent } from './_pages/customer/customer.component';
+import { PackageComponent } from './_pages/package/package.component';
+import { UsersComponent } from './_pages/users/users.component';
+import { ProfileComponent } from './_pages/profile/profile.component';
 
 @NgModule({
     imports: [
@@ -243,8 +250,9 @@ import { AccessComponent } from './components/access/access.component';
         AppMenuComponent,
         AppMenuitemComponent,
         LoginComponent,
-        //old components
         DashboardComponent,
+        //old components
+        // DashboardComponent,
         FormLayoutComponent,
         FloatLabelComponent,
         InvalidStateComponent,
@@ -278,6 +286,10 @@ import { AccessComponent } from './components/access/access.component';
         ErrorComponent,
         NotfoundComponent,
         AccessComponent,
+        CustomerComponent,
+        PackageComponent,
+        UsersComponent,
+        ProfileComponent,
     ],
     providers: [
         //{provide: LocationStrategy, useClass: HashLocationStrategy},

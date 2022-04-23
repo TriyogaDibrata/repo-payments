@@ -27,11 +27,12 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Menu',
                 items:[
-                    {label: 'Dashboard',icon: 'pi pi-fw pi-home', routerLink: ['/']},
-                    {label: 'Pelanggan', icon: 'pi pi-fw pi-users', routerLink: ['/customer']},
-                    {label: 'Paket Layanan Internet', icon: 'pi pi-fw pi-wallet', routerLink: ['/packages']},
-                    {label: 'Kelola Pengguna', icon: 'pi pi-fw pi-user', routerLink: ['/users']},
-                    {label: 'Profile', icon: 'pi pi-fw pi-user-edit', routerLink: ['/profile']}
+                    {label: 'Dashboard',icon: 'pi pi-fw pi-home', routerLink: ['/app/dashboard']},
+                    {label: 'Pelanggan', icon: 'pi pi-fw pi-users', routerLink: ['/app/customer']},
+                    {label: 'Paket Layanan Internet', icon: 'pi pi-fw pi-wallet', routerLink: ['/app/package']},
+                    {label: 'Kelola Pengguna', icon: 'pi pi-fw pi-user', routerLink: ['/app/user']},
+                    {label: 'Pembayaran', icon: 'pi pi-fw pi-credit-card', routerLink: ['/app/payment']},
+                    {label: 'Profile', icon: 'pi pi-fw pi-user-edit', routerLink: ['/app/profile']}
                 ]
             }
         ];
