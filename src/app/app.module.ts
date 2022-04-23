@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
@@ -91,12 +91,12 @@ import { BlockViewer } from './components/blockviewer/blockviewer.component';
  
 import { AppCodeModule } from './components/app-code/app.code.component';
 import { AppComponent } from './app.component';
-import { AppMainComponent } from './app.main.component';
-import { AppTopBarComponent } from './app.topbar.component';
-import { AppFooterComponent } from './app.footer.component';
-import { AppConfigComponent } from './app.config.component';
-import { AppMenuComponent } from './app.menu.component';
-import { AppMenuitemComponent } from './app.menuitem.component';
+import { AppMainComponent } from './_layouts/app.main.component';
+import { AppTopBarComponent } from './_layouts/app.topbar.component';
+import { AppFooterComponent } from './_layouts/app.footer.component';
+import { AppConfigComponent } from './_layouts/app.config.component';
+import { AppMenuComponent } from './_layouts/app.menu.component';
+import { AppMenuitemComponent } from './_layouts/app.menuitem.component';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FormLayoutComponent } from './components/formlayout/formlayout.component';
@@ -136,7 +136,8 @@ import { PhotoService } from './service/photoservice';
 import { ProductService } from './service/productservice';
 import { MenuService } from './service/app.menu.service';
 import { ConfigService } from './service/app.config.service';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './_auth/login/login.component';
+// import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from './components/error/error.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AccessComponent } from './components/access/access.component';
@@ -230,6 +231,8 @@ import { AccessComponent } from './components/access/access.component';
         VirtualScrollerModule,
         AppCodeModule,
         StyleClassModule,
+        ReactiveFormsModule,
+        HttpClientModule
     ],
     declarations: [
         AppComponent,
@@ -239,6 +242,8 @@ import { AccessComponent } from './components/access/access.component';
         AppConfigComponent,
         AppMenuComponent,
         AppMenuitemComponent,
+        LoginComponent,
+        //old components
         DashboardComponent,
         FormLayoutComponent,
         FloatLabelComponent,
@@ -269,13 +274,13 @@ import { AccessComponent } from './components/access/access.component';
         PersonalComponent,
         SeatComponent,
         LandingComponent,
-        LoginComponent,
+        // LoginComponent,
         ErrorComponent,
         NotfoundComponent,
         AccessComponent,
     ],
     providers: [
-        {provide: LocationStrategy, useClass: HashLocationStrategy},
+        //{provide: LocationStrategy, useClass: HashLocationStrategy},
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService, MenuService, ConfigService
     ],
