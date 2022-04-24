@@ -1,0 +1,102 @@
+<div class="grid">
+    <div class="col-12 lg:col-6">
+        <p-toast></p-toast>
+        <div class="card p-fluid">
+            <h4>Customer Information <i class="pi pi-user"></i></h4>
+            <h6 class="mb-2">Name</h6>
+            <span class="text-600">{{customer.name ? customer.name : '-'}}</span>
+
+            <h6 class="mb-2">Email</h6>
+            <span class="text-600">{{customer.email ? customer.email : '-'}}</span>
+
+            <h6 class="mb-2">Phone</h6>
+            <span class="text-600">{{customer.phone ? customer.phone : '-'}}</span>
+        </div>
+    </div>
+    <div class="col-12 lg:col-6">
+        <div class="card p-fluid">
+            <h4>Package Information</h4>
+            <h6 class="mb-2">Current Active Package</h6>
+            <span class="text-600">{{package.name ? package.name : '-'}}</span>
+
+            <h6 class="mb-2">Description</h6>
+            <span class="text-600">{{package.desc ? package.desc : '-'}}</span>
+
+            <h6 class="mb-2">Price</h6>
+            <span class="text-600">{{package.price | currency:'IDR'}}/Bulan</span>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="card p-fluid">
+            <h4>Payment Information</h4>
+            <div class="field col-12 md:col-4">
+                <label for="yearpicker">Select Year</label>
+                <p-calendar [(ngModel)]="date_year" view="year" dateFormat="yy" inputId="yearpicker" (ngModelChange)="onChange($event)"></p-calendar>
+            </div>
+            <p-toolbar *ngFor="let bln of bulans; let idx=index;">
+                <div class="p-toolbar-group-left flex flex-column">
+                    <h5>{{bulanStr[idx]}}</h5>
+                    <span [ngClass]="payments[idx+1] === undefined ? 'unpaid' : 'paid'">{{payments[idx+1] === undefined ? 'Belum Bayar' : 'Sudah Bayar'}}</span>
+                </div>
+                
+                <div class="p-toolbar-group-right">
+                    <p-button *ngIf="payments[idx+1]" icon="pi pi-print" styleClass="p-button-warning m-1" (click)="print(payments[idx+1])"></p-button>
+                    <p-button *ngIf="!payments[idx+1]" icon="pi pi-check" styleClass="p-button-primary m-1" (click)="setToPaid(bln)"></p-button>
+                </div>
+            </p-toolbar>
+        </div>
+    </div>
+</div>
+
+<p-dialog header="Bukti Pembayaran" [(visible)]="display" modal="modal" showEffect="fade" [style]="{width: '30vw'}" [breakpoints]="{'960px': '75vw'}">
+    <!-- <p class="line-height-3 m-0">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
+        in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p> -->
+    <div class="grid border-bottom-2">
+        <div class="col-12 text-3xl font-bold flex justify-content-center">
+            RTRW Net
+        </div>
+        <div class="col-6 text-left">
+            To :
+        </div>
+        <div class="col-6 text-right">
+            {{payment?.cust_name}}
+        </div>
+        <div class="col-6 text-left">
+            Date :
+        </div>
+        <div class="col-6 text-right">
+            {{payment?.date_of_issued}}
+        </div>
+    </div>
+    <div class="grid border-bottom-2 mt-2">
+        <div class="col text-left">
+            Pembayaran Bulan {{bulanStr[payment?.bulan]}}
+            - {{payment?.package_name}}
+        </div>
+        <div class="col text-right">
+            {{payment?.price | currency: 'IDR'}}
+        </div>
+    </div>
+
+    <div class="grid border-bottom-2 mt-2">
+        <div class="col text-left">
+            Total
+        </div>
+        <div class="col text-right font-bold">
+            {{payment?.price | currency: 'IDR'}}
+        </div>
+    </div>
+
+    <div class="grid mt-2">
+        <div class="col-12 text-xl font-bold flex justify-content-center">
+            Terimakasih
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+            <button pButton icon="pi pi-check" (click)="display=false" label="Ok" class="p-button-outlined"></button>
+    </ng-template>
+</p-dialog>

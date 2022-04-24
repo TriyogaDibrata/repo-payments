@@ -8,6 +8,10 @@ import { PackageComponent } from './_pages/package/package.component';
 import { UsersComponent } from './_pages/users/users.component';
 import { PaymentComponent } from './_pages/payment/payment.component';
 import { ProfileComponent } from './_pages/profile/profile.component';
+import { AuthGuard } from './_guards/auth.guard';
+import { PaymentsDetailComponent } from './_pages/payments-detail/payments-detail.component';
+import { AccessComponent } from './components/access/access.component';
+import { RoleGuard } from './_guards/role.guard';
 
 const config : ExtraOptions = {
     useHash : false
@@ -20,6 +24,7 @@ export const routes : Routes = [
     {
         path: 'app',
         component: AppMainComponent,
+        canActivate: [AuthGuard],
         children: [
             {
                 path: 'dashboard',
@@ -27,14 +32,17 @@ export const routes : Routes = [
             },
             {
                 path: 'customer',
+                canActivate: [RoleGuard],
                 component: CustomerComponent
             },
             {
                 path: 'package',
+                canActivate: [RoleGuard],
                 component: PackageComponent
             },
             {
                 path: 'user',
+                canActivate: [RoleGuard],
                 component: UsersComponent
             },
             {
@@ -46,6 +54,10 @@ export const routes : Routes = [
                 component: ProfileComponent
             },
             {
+                path: 'payments-detail/:id',
+                component: PaymentsDetailComponent
+            },
+            {
                 path: '',
                 redirectTo: 'dashboard',
                 pathMatch: 'full'
@@ -53,8 +65,12 @@ export const routes : Routes = [
         ]
     },
     {
+        path: 'restricted',
+        component: AccessComponent
+    },
+    {
         path: '',
-        redirectTo: 'auth/login',
+        redirectTo: 'app',
         pathMatch: 'full'
     }
 ]

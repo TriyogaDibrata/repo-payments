@@ -5,6 +5,7 @@ import { ProductService } from '../../service/productservice';
 import { Subscription } from 'rxjs';
 import { ConfigService } from '../../service/app.config.service';
 import { AppConfig } from '../../api/appconfig';
+import { AuthService } from 'src/app/_requests/auth.service';
  
 @Component({
     templateUrl: './dashboard.component.html',
@@ -23,7 +24,13 @@ export class DashboardComponent implements OnInit {
 
     config: AppConfig;
 
-    constructor(private productService: ProductService, public configService: ConfigService) {}
+    currentUser = this.auth.currentUserValue;
+
+    constructor(
+        private productService: ProductService, 
+        public configService: ConfigService,
+        private auth : AuthService
+        ) {}
 
     ngOnInit() {
         this.config = this.configService.config;
@@ -37,6 +44,8 @@ export class DashboardComponent implements OnInit {
             {label: 'Add New', icon: 'pi pi-fw pi-plus'},
             {label: 'Remove', icon: 'pi pi-fw pi-minus'}
         ];
+
+        console.log(this.currentUser);
 
         this.chartData = {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],

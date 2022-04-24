@@ -4,9 +4,12 @@ import { AppConfig } from '../../api/appconfig';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/_requests/auth.service';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
+  providers: [MessageService],
   styles:[`
     :host ::ng-deep .p-password input {
     width: 100%;
@@ -37,7 +40,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     public configService: ConfigService,
     private formBuilder : FormBuilder,
-    private auth : AuthService
+    private auth : AuthService,
+    private router : Router,
+    private messageService : MessageService
     ){ }
 
   ngOnInit(): void {
@@ -46,20 +51,30 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.config = config;
     });
     
+    if(this.auth.currentUserValue) {
+      this.router.navigate(['/app'])
+    }
+
     this.formLogin = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     })
   }
   
-  login(form) {
+  async login(form) {
     let body = {
       'username' : form.value.username,
       'password' : form.value.password
     }
     
-    this.auth.login(body).subscribe((res) => {
-      console.log(res);
+    await this.auth.login(body).subscribe((res) => {
+      if(res && res.access_token) {
+        this.messageService.add({severity: 'success', summary: 'Success', detail: res.message, life: 2000});
+        setTimeout(() => {
+          this.router.navigate(['/app/dashboard']);
+        }, 1500);
+        // return this.messageService.add({severity: 'success', summary: 'Success', detail: res.message, life: 3000});
+      }
     })
   }
 

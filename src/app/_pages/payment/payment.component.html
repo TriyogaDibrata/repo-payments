@@ -1,1 +1,62 @@
-<p>payment works!</p>
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h5>List of Customers</h5>
+            <p-table #dt responsiveLayout="scroll" [value]="customers" dataKey="id"  [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="false" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [globalFilterFields]="['name']">
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt)"></button>
+                    <span class="p-input-icon-left ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>
+                        <div class="flex justify-content-center align-items-center">
+                            Name
+                            <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-center align-items-center">
+                            Package Name
+                            <p-columnFilter type="text" field="package_name" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-center align-items-center">
+                            Current Month Payment Status
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex justify-content-center align-items-center">
+                            See History Payments
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-customer>
+                <tr>
+                    <td>
+                        {{customer.name}}
+                    </td>
+                    <td>
+                        {{customer.package_name}}
+                    </td>
+                    <td>
+                        <div class="flex justify-content-center align-items-center">
+                            <span [class]="customer.id_payments ? 'paid' : 'unpaid'"> {{customer.id_payments != null ? 'paid' : 'unpaid'}}</span>
+                        </div>
+                    </td>
+                    <td style="text-align: center;">
+                        <button pButton type="button" class="p-button-info" icon="pi pi-search" [routerLink]="['/app/payments-detail', customer.id]" routerLinkActive="router-link-active" ></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        </div>
+    </div>
+</div>

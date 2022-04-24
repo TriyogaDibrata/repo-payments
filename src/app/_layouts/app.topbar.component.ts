@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { AppMainComponent } from './app.main.component';
-import { Subscription } from 'rxjs';
 import { MenuItem } from 'primeng/api';
+import { User } from '../_interfaces/user';
 
 @Component({
     selector: 'app-topbar',
@@ -10,6 +10,9 @@ import { MenuItem } from 'primeng/api';
 export class AppTopBarComponent {
 
     items: MenuItem[];
+    user: User;
 
-    constructor(public appMain: AppMainComponent) { }
+    constructor(
+        public appMain: AppMainComponent
+    ) { }
 }

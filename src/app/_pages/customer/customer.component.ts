@@ -1,139 +1,122 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Product } from 'src/app/api/product';
-import { ProductService } from 'src/app/service/productservice';
+import { Customer } from 'src/app/_interfaces/customer';
+import { Package } from 'src/app/_interfaces/package';
+import { CustomerService } from 'src/app/_requests/customer.service';
+import { RefService } from 'src/app/_requests/ref.service';
 
 @Component({
-  selector: 'app-customer',
-  templateUrl: './customer.component.html',
-  providers: [MessageService, ConfirmationService],
-  styleUrls: ['./customer.component.scss']
+    selector: 'app-customer',
+    templateUrl: './customer.component.html',
+    providers: [MessageService, ConfirmationService],
+    styleUrls: ['./customer.component.scss']
 })
 export class CustomerComponent implements OnInit {
+    //new
+    customerDialog: boolean;
+    customers: Customer[];
+    customer: Customer;
+    packages: Package[];
+    selectedPackage: any;
+    selectedCustomers : Customer[];
+    deleteCustomerDialog : boolean = false;
+    deleteCustomersDialog : boolean = false;
+    rowsPerPageOptions = [5, 10, 20];
+    cols: any[];
+    submitted: boolean;
 
-  productDialog: boolean;
+    constructor(
+        private customerSvc: CustomerService,
+        private refSvc: RefService,
+        private messageService: MessageService) { }
 
-  deleteProductDialog: boolean = false;
+    ngOnInit() {
+        this.cols = [
+            { field: 'name', header: 'Name' },
+            { field: 'email', header: 'Email' },
+            { field: 'phone', header: 'Phone' },
+            { field: 'package', header: 'Package' },
+            { field: 'status', header: 'Status' }
+        ];
 
-  deleteProductsDialog: boolean = false;
+        this.getCustomer();
+        this.getPackages();
+    }
 
-  products: Product[];
+    getCustomer() {
+        this.customerSvc.getCustomers().subscribe((data) => {
+            this.customers = data['data'];
+        })
+    }
 
-  product: Product;
+    getPackages() {
+        this.refSvc.getAllPackages().subscribe((data) => {
+            this.packages = data;
+        })
+    }
 
-  selectedProducts: Product[];
+    openNew() {
+        this.customer = {};
+        this.submitted = false;
+        this.customerDialog = true;
+    }
 
-  submitted: boolean;
+    editCustomer(customer: Customer) {
+        this.customer = { ...customer };
+        this.customerDialog = true;
+    }
 
-  cols: any[];
+    deleteCustomer(customer : Customer) {
+        this.deleteCustomerDialog = true;
+        this.customer = { ...customer }
+    }
 
-  statuses: any[];
+    confirmDelete() {
+        this.customerSvc.deleteCustomer(this.customer.id).subscribe((res) => {
+            if(res && res['success']) {
+                this.deleteCustomerDialog = false;
+                this.messageService.add({severity: 'success', summary: 'Success', detail: res['msg']});
+                this.ngOnInit();
+            }
+        })
+    }
 
-  rowsPerPageOptions = [5, 10, 20];
+    hideDialog() {
+        this.customerDialog = false;
+        this.submitted = false;
+    }
 
-  constructor(private productService: ProductService, private messageService: MessageService,
-              private confirmationService: ConfirmationService) {}
+    saveCustomer() {
+        this.submitted = true;
+        if (this.customer.id) {
+            let params = {
+                'name' : this.customer.name,
+                'email' : this.customer.email,
+                'phone' : this.customer.phone,
+                'package_id' : this.customer.package_id
+            }
 
-  ngOnInit() {
-      this.productService.getProducts().then(data => this.products = data);
-
-      this.cols = [
-          {field: 'name', header: 'Name'},
-          {field: 'price', header: 'Price'},
-          {field: 'category', header: 'Category'},
-          {field: 'rating', header: 'Reviews'},
-          {field: 'inventoryStatus', header: 'Status'}
-      ];
-
-      this.statuses = [
-          {label: 'INSTOCK', value: 'instock'},
-          {label: 'LOWSTOCK', value: 'lowstock'},
-          {label: 'OUTOFSTOCK', value: 'outofstock'}
-      ];
-  }
-
-  openNew() {
-      this.product = {};
-      this.submitted = false;
-      this.productDialog = true;
-  }
-
-  deleteSelectedProducts() {
-      this.deleteProductsDialog = true;
-  }
-
-  editProduct(product: Product) {
-      this.product = {...product};
-      this.productDialog = true;
-  }
-
-  deleteProduct(product: Product) {
-      this.deleteProductDialog = true;
-      this.product = {...product};
-  }
-
-  confirmDeleteSelected(){
-      this.deleteProductsDialog = false;
-      this.products = this.products.filter(val => !this.selectedProducts.includes(val));
-      this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
-      this.selectedProducts = null;
-  }
-
-  confirmDelete(){
-      this.deleteProductDialog = false;
-      this.products = this.products.filter(val => val.id !== this.product.id);
-      this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
-      this.product = {};
-  }
-
-  hideDialog() {
-      this.productDialog = false;
-      this.submitted = false;
-  }
-
-  saveProduct() {
-      this.submitted = true;
-
-      if (this.product.name.trim()) {
-          if (this.product.id) {
-              // @ts-ignore
-              this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value: this.product.inventoryStatus;
-              this.products[this.findIndexById(this.product.id)] = this.product;
-              this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
-          } else {
-              this.product.id = this.createId();
-              this.product.code = this.createId();
-              this.product.image = 'product-placeholder.svg';
-              // @ts-ignore
-              this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
-              this.products.push(this.product);
-              this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000});
-          }
-
-          this.products = [...this.products];
-          this.productDialog = false;
-          this.product = {};
-      }
-  }
-
-  findIndexById(id: string): number {
-      let index = -1;
-      for (let i = 0; i < this.products.length; i++) {
-          if (this.products[i].id === id) {
-              index = i;
-              break;
-          }
-      }
-
-      return index;
-  }
-
-  createId(): string {
-      let id = '';
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      for (let i = 0; i < 5; i++) {
-          id += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return id;
-  }
+            this.customerSvc.updateCustomer(this.customer.id, params).subscribe((res) => {
+                if (res && res['success']) {
+                    this.messageService.add({ severity: 'success', summary: 'Success', detail: res['msg'] });
+                    this.customerDialog = false;
+                    this.ngOnInit();
+                }
+            })
+        } else {
+            let body = {
+                'name': this.customer.name,
+                'email': this.customer.email,
+                'phone': this.customer.phone,
+                'package_id': this.customer.package_id
+            }
+            this.customerSvc.storeCustomer(body).subscribe((res) => {
+                if (res && res['success']) {
+                    this.messageService.add({ severity: 'success', summary: 'Success', detail: res['msg'] });
+                    this.customerDialog = false;
+                    this.ngOnInit();
+                }
+            });
+        }
+    }
 }

@@ -1,1 +1,55 @@
-<p>profile works!</p>
+<div class="grid">
+    <div class="col-12">
+        <p-toast></p-toast>
+        <div class="card">
+            <p-toolbar class="mb-5">
+                <div class="p-toolbar-group-left">
+                    <h4>Manage Account</h4>
+                </div>
+
+                <div class="p-toolbar-group-right">
+                    <p-confirmPopup></p-confirmPopup>
+                    <p-button (click)="confirm($event)" label="Logout" icon="pi pi-sign-out" styleClass="p-button-danger"></p-button>
+                </div>
+            </p-toolbar>
+        </div>
+        <div class="card">
+            <p-accordion>
+                <p-accordionTab header="Manage Profile Data" [selected]="true" class="line-height-3 m-0">
+                    <div class="card p-fluid">
+                        <div class="field">
+                            <label htmlFor="name">Name</label>
+                            <input [(ngModel)]="user.name" pInputText id="name" type="text" />
+                        </div>
+                        <div class="field">
+                            <label htmlFor="username">Username</label>
+                            <input [(ngModel)]="user.username" pInputText id="username" type="text" />
+                        </div>
+                        <div class="field">
+                            <label htmlFor="email">Email</label>
+                            <input [(ngModel)]="user.email" pInputText id="email" type="text" />
+                        </div>
+                        <button pButton pRipple type="button" label="Submit" (click)="updateUser()"></button>
+                    </div>
+                </p-accordionTab>
+                <p-accordionTab header="Change Password" class="line-height-3 m-0">
+                    <div class="card p-fluid">
+                        <div class="field">
+                            <label htmlFor="old_password">Old Password</label>
+                            <input [(ngModel)]="old_password" pInputText id="old_password" type="password" />
+                        </div>
+                        <div class="field">
+                            <label htmlFor="new_password">New Password</label>
+                            <input [(ngModel)]="new_password" pInputText id="new_password" type="password" />
+                        </div>
+                        <div class="field">
+                            <label htmlFor="password_c">Confirm New Password</label>
+                            <input [(ngModel)]="c_new_password" pInputText id="password_c" type="password" />
+                        </div>
+                        <button pButton pRipple type="button" label="Submit" (click)="updatePassword()"></button>
+                    </div>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+    </div>
+</div>

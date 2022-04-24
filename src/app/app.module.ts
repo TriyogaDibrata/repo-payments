@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -121,7 +121,6 @@ import { CrudComponent } from './components/crud/crud.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { IconsComponent } from './components/icons/icons.component';
 import { BlocksComponent } from './components/blocks/blocks.component';
-import { PaymentComponent} from './components/menus/payment.component';
 import { ConfirmationComponent } from './components/menus/confirmation.component';
 import { PersonalComponent } from './components/menus/personal.component';
 import { SeatComponent } from './components/menus/seat.component';
@@ -148,6 +147,9 @@ import { CustomerComponent } from './_pages/customer/customer.component';
 import { PackageComponent } from './_pages/package/package.component';
 import { UsersComponent } from './_pages/users/users.component';
 import { ProfileComponent } from './_pages/profile/profile.component';
+import { HeaderInterceptor } from './_interceptors/header.interceptor';
+import { PaymentComponent } from './_pages/payment/payment.component';
+import { PaymentsDetailComponent } from './_pages/payments-detail/payments-detail.component';
 
 @NgModule({
     imports: [
@@ -251,6 +253,7 @@ import { ProfileComponent } from './_pages/profile/profile.component';
         AppMenuitemComponent,
         LoginComponent,
         DashboardComponent,
+        PaymentComponent,
         //old components
         // DashboardComponent,
         FormLayoutComponent,
@@ -277,7 +280,7 @@ import { ProfileComponent } from './_pages/profile/profile.component';
         BlocksComponent,
         BlockViewer,
         MediaComponent,
-        PaymentComponent,
+        //PaymentComponent,
         ConfirmationComponent,
         PersonalComponent,
         SeatComponent,
@@ -290,9 +293,11 @@ import { ProfileComponent } from './_pages/profile/profile.component';
         PackageComponent,
         UsersComponent,
         ProfileComponent,
+        PaymentsDetailComponent,
     ],
     providers: [
         //{provide: LocationStrategy, useClass: HashLocationStrategy},
+        {provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true},
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService, MenuService, ConfigService
     ],
