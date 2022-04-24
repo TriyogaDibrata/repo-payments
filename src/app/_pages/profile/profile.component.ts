@@ -53,7 +53,6 @@ export class ProfileComponent implements OnInit {
 
   getUser() {
     this.auth.getUser().subscribe((data) => {
-      console.log(data);
       this.user = data;
     })
   }

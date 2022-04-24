@@ -45,7 +45,6 @@ export class UsersComponent implements OnInit {
     getUsers() {
         this.userSvc.getUsers().subscribe((data) => {
             this.users = data['data'];
-            console.log(this.users)
         })
     }
 
@@ -83,7 +82,6 @@ export class UsersComponent implements OnInit {
 
     saveUser() {
         this.submitted = true;
-        console.log(this.user);
         if (this.user.id) {
             let params = {
                 'name': this.user.name,

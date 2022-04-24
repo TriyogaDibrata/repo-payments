@@ -150,6 +150,7 @@ import { ProfileComponent } from './_pages/profile/profile.component';
 import { HeaderInterceptor } from './_interceptors/header.interceptor';
 import { PaymentComponent } from './_pages/payment/payment.component';
 import { PaymentsDetailComponent } from './_pages/payments-detail/payments-detail.component';
+import { ErrorInterceptor } from './_interceptors/error.interceptor';
 
 @NgModule({
     imports: [
@@ -296,8 +297,9 @@ import { PaymentsDetailComponent } from './_pages/payments-detail/payments-detai
         PaymentsDetailComponent,
     ],
     providers: [
-        //{provide: LocationStrategy, useClass: HashLocationStrategy},
+        {provide: LocationStrategy, useClass: HashLocationStrategy},
         {provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true},
+        {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService, MenuService, ConfigService
     ],

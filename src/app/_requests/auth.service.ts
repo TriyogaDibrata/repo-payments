@@ -54,11 +54,15 @@ export class AuthService {
     return this.http.post(`${environment.url}` + 'logout', {})
     .pipe(map((res) => {
       if(res && res['success']) {
-        localStorage.removeItem('currentUser');
-        this.currentUserSubject.next(null);
+        this.clearUser();
       }
       return res;
     }));
+  }
+
+  clearUser() {
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
   }
 
   getUser() {

@@ -52,7 +52,6 @@ export class PaymentsDetailComponent implements OnInit {
   print(item) {
     this.display = true;
     this.payment = item[0];
-    console.log(item);
   }
 
   setToPaid(bln) {

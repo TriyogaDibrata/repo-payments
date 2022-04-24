@@ -45,8 +45,6 @@ export class DashboardComponent implements OnInit {
             {label: 'Remove', icon: 'pi pi-fw pi-minus'}
         ];
 
-        console.log(this.currentUser);
-
         this.chartData = {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
             datasets: [

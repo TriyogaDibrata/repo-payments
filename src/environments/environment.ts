@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url : 'https://demo-payments.triyogadibrata.com/public/api/'
+  url : 'http://localhost:8000/api/'
 };
 
 /*
