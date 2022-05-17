@@ -5,7 +5,7 @@
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
                     <div class="my-2">
-                        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Tambah Paket Layanan Baru" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
                     </div>
                 </ng-template>
             </p-toolbar>
@@ -13,7 +13,7 @@
             <p-table #dt [value]="packages" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','email']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedPackages" selectionMode="multiple" [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                        <h5 class="m-0">Manage Packages</h5>
+                        <h5 class="m-0">Kelola Paket Layanan</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
                             <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
@@ -25,10 +25,10 @@
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-                        <th pSortableColumn="email">Description <p-sortIcon field="desc"></p-sortIcon></th>
-                        <th pSortableColumn="phone">Price <p-sortIcon field="price"></p-sortIcon></th>
-                        <th>Action</th>
+                        <th pSortableColumn="name">Nama <p-sortIcon field="name"></p-sortIcon></th>
+                        <th pSortableColumn="email">Deskripsi <p-sortIcon field="desc"></p-sortIcon></th>
+                        <th pSortableColumn="phone">Harga <p-sortIcon field="price"></p-sortIcon></th>
+                        <th>Aksi</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-package>
@@ -37,7 +37,7 @@
                             <p-tableCheckbox [value]="package"></p-tableCheckbox>
                         </td>
                         <td style="min-width:10rem;">
-                            <span class="p-column-title">Name</span>
+                            <span class="p-column-title">Nama</span>
                             {{package.name}}
                         </td>
                         <td style="min-width:10rem;">
@@ -45,7 +45,7 @@
                             {{package.desc}}
                         </td>
                         <td style="min-width:10rem;">
-                            <span class="p-column-title">Phone</span>
+                            <span class="p-column-title">Harga</span>
                             {{package.price | currency:'IDR'}}
                         </td>
                         <td>
@@ -63,16 +63,16 @@
             <ng-template pTemplate="content">
 
                 <div class="field">
-                    <label for="name">Package Name</label>
+                    <label for="name">Nama Paket Layanan</label>
                     <input type="text" pInputText id="name" [(ngModel)]="package.name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !package.name}"/>
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !package.name">Name is required.</small>
                 </div>
                 <div class="field">
-                    <label for="description">Description</label>
+                    <label for="description">Desktipsi Paket Layanan</label>
                     <textarea id="description" pInputTextarea [(ngModel)]="package.desc" required rows="3" cols="20"></textarea>
                 </div>
                 <div class="field">
-                    <label for="name">Price</label>
+                    <label for="name">Harga</label>
                     <input type="number" pInputText id="price" [(ngModel)]="package.price" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !package.price}"/>
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !package.price">Price is required.</small>
                 </div>
@@ -87,7 +87,7 @@
         <p-dialog [(visible)]="deletePackageDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span *ngIf="package">Are you sure you want to delete <b>{{package.name}}</b>?</span>
+                <span *ngIf="package">Apakah ada yakin untuk menghapus <b>{{package.name}}</b>?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deletePackageDialog = false"></button>

@@ -1,7 +1,7 @@
 <div class="grid">
     <div class="col-12">
         <div class="card">
-            <h5>List of Customers</h5>
+            <h5>Daftar Pelanggan</h5>
             <p-table #dt responsiveLayout="scroll" [value]="customers" dataKey="id"  [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="false" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [globalFilterFields]="['name']">
             <ng-template pTemplate="caption">
                 <div class="flex">
@@ -16,24 +16,24 @@
                 <tr>
                     <th>
                         <div class="flex justify-content-center align-items-center">
-                            Name
+                            Nama Pelanggan
                             <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
                         </div>
                     </th>
                     <th>
                         <div class="flex justify-content-center align-items-center">
-                            Package Name
+                            Paket Layanan Internet
                             <p-columnFilter type="text" field="package_name" display="menu"></p-columnFilter>
                         </div>
                     </th>
                     <th>
                         <div class="flex justify-content-center align-items-center">
-                            Current Month Payment Status
+                            Status Pembayaran Bulan Ini
                         </div>
                     </th>
                     <th>
                         <div class="flex justify-content-center align-items-center">
-                            See History Payments
+                            Lihat Riwayat Pembayaran
                         </div>
                     </th>
                 </tr>
@@ -48,7 +48,7 @@
                     </td>
                     <td>
                         <div class="flex justify-content-center align-items-center">
-                            <span [class]="customer.id_payments ? 'paid' : 'unpaid'"> {{customer.id_payments != null ? 'paid' : 'unpaid'}}</span>
+                            <span [class]="customer.id_payments ? 'paid' : 'unpaid'"> {{customer.id_payments != null ? 'Sudah Bayar' : 'Belum Bayar'}}</span>
                         </div>
                     </td>
                     <td style="text-align: center;">

@@ -5,7 +5,7 @@
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
                     <div class="my-2">
-                        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Tambah Pelanggan Baru" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
                     </div>
                 </ng-template>
             </p-toolbar>
@@ -13,7 +13,7 @@
             <p-table #dt [value]="customers" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','email']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedCustomers" selectionMode="multiple" [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                        <h5 class="m-0">Manage Customers</h5>
+                        <h5 class="m-0">Kelola Pelanggan</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
                             <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
@@ -25,12 +25,12 @@
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+                        <th pSortableColumn="name">Nama <p-sortIcon field="name"></p-sortIcon></th>
                         <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
                         <th pSortableColumn="phone">Phone <p-sortIcon field="phone"></p-sortIcon></th>
-                        <th pSortableColumn="package_name">Package <p-sortIcon field="package_name"></p-sortIcon></th>
+                        <th pSortableColumn="package_name">Paket <p-sortIcon field="package_name"></p-sortIcon></th>
                         <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
-                        <th>Action</th>
+                        <th>Aksi</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-customer>
@@ -39,7 +39,7 @@
                             <p-tableCheckbox [value]="customer"></p-tableCheckbox>
                         </td>
                         <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">Name</span>
+                            <span class="p-column-title">Nama</span>
                             {{customer.name}}
                         </td>
                         <td style="width:14%; min-width:10rem;">
@@ -51,12 +51,12 @@
                             {{customer.phone}}
                         </td>
                         <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">Package</span>
+                            <span class="p-column-title">Paket</span>
                             {{customer.package_name}}
                         </td>
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">Status</span>
-                            {{customer.status == '1' ? 'Active' : 'Unactive'}}
+                            {{customer.status == '1' ? 'Aktif' : 'Tidak Aktif'}}
                         </td>
                         <td>
                             <div class="flex">
@@ -72,12 +72,12 @@
         <p-dialog [(visible)]="customerDialog" [style]="{width: '450px'}" header="Customer Details" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
                 <div class="field">
-                    <label for="package">Select Package</label>
+                    <label for="package">Pilih Paket</label>
                     <p-dropdown [options]="packages" [(ngModel)]="customer.package_id" optionLabel="name" optionValue="id"></p-dropdown>
                 </div>
 
                 <div class="field">
-                    <label for="name">Customer Name</label>
+                    <label for="name">Nama Pelanggan</label>
                     <input type="text" pInputText id="name" [(ngModel)]="customer.name" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !customer.name}"/>
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !customer.name">Name is required.</small>
                 </div>
@@ -102,7 +102,7 @@
         <p-dialog [(visible)]="deleteCustomerDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span *ngIf="customer">Are you sure you want to delete <b>{{customer.name}}</b>?</span>
+                <span *ngIf="customer">Apakah anda yakin untuk menghapus <b>{{customer.name}}</b>?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteCustomerDialog = false"></button>

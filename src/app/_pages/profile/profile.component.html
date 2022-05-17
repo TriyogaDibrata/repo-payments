@@ -4,7 +4,7 @@
         <div class="card">
             <p-toolbar class="mb-5">
                 <div class="p-toolbar-group-left">
-                    <h4>Manage Account</h4>
+                    <h4>Keloa Akun</h4>
                 </div>
 
                 <div class="p-toolbar-group-right">
@@ -15,10 +15,10 @@
         </div>
         <div class="card">
             <p-accordion>
-                <p-accordionTab header="Manage Profile Data" [selected]="true" class="line-height-3 m-0">
+                <p-accordionTab header="Kelola Data Profile" [selected]="true" class="line-height-3 m-0">
                     <div class="card p-fluid">
                         <div class="field">
-                            <label htmlFor="name">Name</label>
+                            <label htmlFor="name">Nama</label>
                             <input [(ngModel)]="user.name" pInputText id="name" type="text" />
                         </div>
                         <div class="field">
@@ -32,18 +32,18 @@
                         <button pButton pRipple type="button" label="Submit" (click)="updateUser()"></button>
                     </div>
                 </p-accordionTab>
-                <p-accordionTab header="Change Password" class="line-height-3 m-0">
+                <p-accordionTab header="Ubah Password" class="line-height-3 m-0">
                     <div class="card p-fluid">
                         <div class="field">
-                            <label htmlFor="old_password">Old Password</label>
+                            <label htmlFor="old_password">Password Lama</label>
                             <input [(ngModel)]="old_password" pInputText id="old_password" type="password" />
                         </div>
                         <div class="field">
-                            <label htmlFor="new_password">New Password</label>
+                            <label htmlFor="new_password">Password Baru</label>
                             <input [(ngModel)]="new_password" pInputText id="new_password" type="password" />
                         </div>
                         <div class="field">
-                            <label htmlFor="password_c">Confirm New Password</label>
+                            <label htmlFor="password_c">Ulangi Password Baru</label>
                             <input [(ngModel)]="c_new_password" pInputText id="password_c" type="password" />
                         </div>
                         <button pButton pRipple type="button" label="Submit" (click)="updatePassword()"></button>

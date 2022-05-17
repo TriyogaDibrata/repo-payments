@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.formLogin = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
-    })
+    });
   }
 
   login(form) {
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       'username': form.value.username,
       'password': form.value.password
     }
-    this.http.get('http://localhost:8000/sanctum/csrf-cookie').toPromise()
+    this.http.get(`${environment.base_url}` + 'sanctum/csrf-cookie').toPromise()
       .then(() => {
         this.auth.login(body).subscribe((res) => {
           if (res && res.access_token) {
@@ -73,5 +73,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  log() {
+    let count = 0;
+    count++;
+    console.log(count);
   }
 }

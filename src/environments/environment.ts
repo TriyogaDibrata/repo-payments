@@ -4,7 +4,10 @@
 
 export const environment = {
   production: false,
-  url : 'http://localhost:8000/api/'
+  // url : 'https://demo-payments.triyogadibrata.com/public/api/',
+  // base_url : 'https://demo-payments.triyogadibrata.com/public/'
+  url : 'http://localhost:8000/api/',
+  base_url : 'http://localhost:8000/'
 };
 
 /*

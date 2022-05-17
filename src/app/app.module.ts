@@ -151,6 +151,8 @@ import { HeaderInterceptor } from './_interceptors/header.interceptor';
 import { PaymentComponent } from './_pages/payment/payment.component';
 import { PaymentsDetailComponent } from './_pages/payments-detail/payments-detail.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
+import { DebounceClickDirective } from './_directives/debounce-click.directive';
+import { PrintComponent } from './_components/print/print.component';
 
 @NgModule({
     imports: [
@@ -295,6 +297,8 @@ import { ErrorInterceptor } from './_interceptors/error.interceptor';
         UsersComponent,
         ProfileComponent,
         PaymentsDetailComponent,
+        DebounceClickDirective,
+        PrintComponent,
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

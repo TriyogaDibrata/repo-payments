@@ -13,8 +13,8 @@
                 style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
                 <div class="text-center mb-5">
                     <img src="assets/layout/images/logo.png" alt="Image" height="50" class="mb-3">
-                    <div class="text-900 text-3xl font-medium mb-3">Hi, Welcome</div>
-                    <span class="text-600 font-medium">Sign in to continue</span>
+                    <div class="text-900 text-3xl font-medium mb-3">Halo, Selamat datang</div>
+                    <span class="text-600 font-medium">Silahkan login dengan memasukan username dan password yang sudah didaftarkan</span>
                 </div>
 
                 <div class="w-full md:w-10 mx-auto">
@@ -32,10 +32,10 @@
                                 <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>
                                 <label for="rememberme1">Remember me</label>
                             </div>
-                            <a class="font-medium no-underline ml-2 text-right cursor-pointer"
-                                style="color: var(--primary-color)">Forgot password?</a>
+                            <!-- <a class="font-medium no-underline ml-2 text-right cursor-pointer"
+                                style="color: var(--primary-color)">Forgot password?</a> -->
                         </div>
-                        <button pButton pRipple label="Sign In" class="w-full p-3 text-xl" [disabled]="formLogin.invalid"></button>
+                        <button appDebounceClick (debounceClick)="login(formLogin)" [debounceTime]="700" pButton pRipple label="Sign In" class="w-full p-3 text-xl" [disabled]="formLogin.invalid"></button>
                     </form>
                 </div>
             </div>

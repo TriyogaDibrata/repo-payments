@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import { ConfigService } from '../../service/app.config.service';
 import { AppConfig } from '../../api/appconfig';
 import { AuthService } from 'src/app/_requests/auth.service';
+import { DashboardService } from 'src/app/_requests/dashboard.service';
+import * as moment from 'moment';
  
 @Component({
     templateUrl: './dashboard.component.html',
@@ -25,11 +27,27 @@ export class DashboardComponent implements OnInit {
     config: AppConfig;
 
     currentUser = this.auth.currentUserValue;
+    
+    curentRevenue;
+    currentCustomer;
+    payments;
+    bulans = [1,2,3,4,5,6,7,8,9,10,11,12];
+    bulanStr = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustust', 'September', 'Oktober', 'November', 'Desember'];
+    pieData;
+    pieOptions;
+    pieLabel = [];
+    pieValue = [];
+    barData;
+    barLabel = [];
+    barValue = [];
+    baroptions;
+    tahun = moment().year();
 
     constructor(
         private productService: ProductService, 
         public configService: ConfigService,
-        private auth : AuthService
+        private auth : AuthService,
+        private dashboardService : DashboardService
         ) {}
 
     ngOnInit() {
@@ -38,34 +56,61 @@ export class DashboardComponent implements OnInit {
             this.config = config;
             this.updateChartOptions();
         });
-        this.productService.getProductsSmall().then(data => this.products = data);
-          
-        this.items = [
-            {label: 'Add New', icon: 'pi pi-fw pi-plus'},
-            {label: 'Remove', icon: 'pi pi-fw pi-minus'}
-        ];
 
-        this.chartData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [
-                {
-                    label: 'First Dataset',
-                    data: [65, 59, 80, 81, 56, 55, 40],
-                    fill: false,
-                    backgroundColor: '#2f4860',
-                    borderColor: '#2f4860',
-                    tension: .4
-                },
-                {
-                    label: 'Second Dataset',
-                    data: [28, 48, 40, 19, 86, 27, 90],
-                    fill: false,
-                    backgroundColor: '#00bb7e',
-                    borderColor: '#00bb7e',
-                    tension: .4
+        this.getData();
+    }
+    
+    getData() {
+        this.dashboardService.getData().subscribe((res) => {
+            console.log(res);
+            if(res && res['success']) {
+                this.curentRevenue = res['data']['current_revenue'];
+                this.currentCustomer = res['data']['customer'];
+                this.payments = res['data']['current_payment'];
+                let custPackage = res['data']['cust_package'];
+                let revByMonth = res['data']['revenue_by_month'];
+                
+                custPackage.forEach((value) => {
+                    this.pieLabel.push(value.name);
+                    this.pieValue.push(value.total);
+                });
+                
+                revByMonth.forEach((value) => {
+                    this.barLabel.push(this.bulanStr[value.month -1]);
+                    this.barValue.push(value.total);
+                })
+                
+                this.pieData = {
+                    labels: this.pieLabel,
+                    datasets: [
+                        {
+                            data: this.pieValue,
+                            backgroundColor: [
+                                "#FF6384",
+                                "#36A2EB",
+                                "#FFCE56"
+                            ],
+                            hoverBackgroundColor: [
+                                "#FF6384",
+                                "#36A2EB",
+                                "#FFCE56"
+                            ]
+                        }
+                    ]
+                };
+                
+                this.barData = {
+                    labels: this.barLabel,
+                    datasets: [
+                        {
+                            label: 'Total Penadapatan',
+                            backgroundColor: '#2f4860',
+                            data: this.barValue
+                        }
+                    ]
                 }
-            ]
-        };
+            }
+        })
     }
 
     updateChartOptions() {
@@ -73,33 +118,42 @@ export class DashboardComponent implements OnInit {
             this.applyDarkTheme();
         else
             this.applyLightTheme();
-
     }
 
     applyDarkTheme() {
-        this.chartOptions = {
+        this.pieOptions = {
             plugins: {
                 legend: {
                     labels: {
-                        color: '#ebedef'
+                        color: '#495057'
+                    }
+                }
+            }
+        };
+        
+        this.baroptions = {
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#495057'
                     }
                 }
             },
             scales: {
                 x: {
                     ticks: {
-                        color: '#ebedef'
+                        color: '#495057'
                     },
                     grid: {
-                        color:  'rgba(160, 167, 181, .3)',
+                        color:  '#ebedef',
                     }
                 },
                 y: {
                     ticks: {
-                        color: '#ebedef'
+                        color: '#495057'
                     },
                     grid: {
-                        color:  'rgba(160, 167, 181, .3)',
+                        color:  '#ebedef',
                     }
                 },
             }

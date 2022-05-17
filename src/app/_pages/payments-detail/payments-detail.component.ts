@@ -21,7 +21,7 @@ export class PaymentsDetailComponent implements OnInit {
   payments : any;
   payment : any;
   bulans = [1,2,3,4,5,6,7,8,9,10,11,12];
-  bulanStr = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustust', 'September', 'Oktober', 'November', 'Desember'];
+  bulanStr = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
   display : boolean = false;
 
   constructor(
