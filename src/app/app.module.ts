@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { LocationStrategy, HashLocationStrategy, CurrencyPipe } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -153,11 +153,13 @@ import { PaymentsDetailComponent } from './_pages/payments-detail/payments-detai
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { DebounceClickDirective } from './_directives/debounce-click.directive';
 import { PrintComponent } from './_components/print/print.component';
+import { ThermalPrintModule } from 'ng-thermal-print';
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
+        ThermalPrintModule,
         AppRoutingModule,
         HttpClientModule,
         BrowserAnimationsModule,
@@ -305,7 +307,7 @@ import { PrintComponent } from './_components/print/print.component';
         {provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService, MenuService, ConfigService
+        PhotoService, ProductService, MenuService, ConfigService, CurrencyPipe
     ],
     bootstrap: [AppComponent]
 })

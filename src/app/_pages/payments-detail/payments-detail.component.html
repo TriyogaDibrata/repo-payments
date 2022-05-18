@@ -57,7 +57,7 @@
     </p> -->
     <div class="grid border-bottom-2">
         <div class="col-12 text-3xl font-bold flex justify-content-center">
-            RTRW Net
+            Internet Desa Petang
         </div>
         <div class="col-6 text-left">
             Kepada :
@@ -97,6 +97,8 @@
         </div>
     </div>
     <ng-template pTemplate="footer">
-            <button pButton icon="pi pi-check" (click)="display=false" label="Ok" class="p-button-outlined"></button>
+            <button pButton icon="pi pi-link" *ngIf="status === false" (click)="requestUsb()" label="Connect To Printer" class="p-button-outlined"></button>
+            <button pButton icon="pi pi-print" *ngIf="status === true" (click)="printReciept()" label="Print" class="p-button-outlined"></button>
+            <button pButton icon="pi pi-check" (click)="display=false" label="Close" class="p-button-outlined"></button>
     </ng-template>
 </p-dialog>
